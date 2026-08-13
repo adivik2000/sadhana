@@ -3,5 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "engines": { "node": ">=20" },
   "description": "Sadhana — training platform for a luxury salon and spa brand"
 }
