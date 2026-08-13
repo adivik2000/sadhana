@@ -44,18 +44,16 @@ const server = createServer(async (req, res) => {
       req.query = Object.fromEntries(url.searchParams);
       req.body = await readBody(req);
 
-      // The res methods Vercel functions actually use here. draft.js calls
-      // res.json() directly (Vercel provides it natively); state.js/grade.js
-      // go through store.js's json() helper, which only needs status+send.
-      // Without res.json the local shim looks fine until the one endpoint
-      // that needs it is hit — exactly the kind of gap that only shows up
-      // when you actually run the untested path, not when you read the code.
+      // Deliberately minimal — status() and send() only, matching what
+      // store.js's shared json() helper actually needs. No res.json() shim:
+      // that was added once to patch over a local/prod mismatch (draft.js
+      // called res.json() directly, assuming Vercel provides it; it doesn't,
+      // on this project's runtime — worked locally, 502'd in production).
+      // Every API route now goes through store.js's json() instead, and this
+      // shim is kept intentionally narrow so a regression back to res.json()
+      // fails here too, not just in prod.
       res.status = (code) => ((res.statusCode = code), res);
       res.send = (payload) => res.end(payload);
-      res.json = (payload) => {
-        res.setHeader("content-type", "application/json");
-        res.end(JSON.stringify(payload));
-      };
 
       await mod.default(req, res);
     } catch (err) {

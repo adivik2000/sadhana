@@ -10,6 +10,8 @@
 // parse defensively and repair/drop rather than trust, and only fail the request
 // if nothing usable survives.
 
+import { json } from "./_lib/store.js";
+
 const MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
 const STEP_TYPES = new Set(["text", "video", "image", "task", "quiz"]);
 
@@ -142,19 +144,19 @@ function repairCourse(raw, description) {
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    res.status(405).json({ error: "Method not allowed" });
+    json(res, { error: "Method not allowed" }, 405);
     return;
   }
 
   const description = asString(req.body?.description);
   if (!description) {
-    res.status(400).json({ error: "description is required" });
+    json(res, { error: "description is required" }, 400);
     return;
   }
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    res.status(500).json({ error: "GEMINI_API_KEY is not set" });
+    json(res, { error: "GEMINI_API_KEY is not set" }, 500);
     return;
   }
 
@@ -179,19 +181,19 @@ export default async function handler(req, res) {
 
     if (!r.ok) {
       const body = await r.text().catch(() => "");
-      res.status(502).json({ error: `Gemini request failed (${r.status}): ${body.slice(0, 300)}` });
+      json(res, { error: `Gemini request failed (${r.status}): ${body.slice(0, 300)}` }, 502);
       return;
     }
 
     const data = await r.json();
     text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
     if (!text) {
-      res.status(502).json({ error: "Gemini returned no content" });
+      json(res, { error: "Gemini returned no content" }, 502);
       return;
     }
   } catch (err) {
     const timedOut = err?.name === "AbortError";
-    res.status(502).json({ error: timedOut ? "Gemini request timed out" : `Gemini request failed: ${err.message}` });
+    json(res, { error: timedOut ? "Gemini request timed out" : `Gemini request failed: ${err.message}` }, 502);
     return;
   } finally {
     clearTimeout(timeout);
@@ -201,15 +203,15 @@ export default async function handler(req, res) {
   try {
     raw = JSON.parse(stripFence(text));
   } catch {
-    res.status(502).json({ error: "Gemini did not return valid JSON" });
+    json(res, { error: "Gemini did not return valid JSON" }, 502);
     return;
   }
 
   const course = repairCourse(raw, description);
   if (!course) {
-    res.status(502).json({ error: "Gemini's draft could not be turned into a usable course" });
+    json(res, { error: "Gemini's draft could not be turned into a usable course" }, 502);
     return;
   }
 
-  res.status(200).json({ course });
+  json(res, { course });
 }
