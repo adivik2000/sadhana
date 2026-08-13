@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sadhana — Spa Training</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <header class="site-header">
+    <div class="wordmark">
+      <svg class="mark" width="28" height="28" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <path d="M24 6C24 6 12 16 12 28C12 36.837 17.163 42 24 42C30.837 42 36 36.837 36 28C36 16 24 6 24 6Z" stroke="currentColor" stroke-width="1.4"/>
+        <path d="M24 42C24 42 24 30 24 22" stroke="currentColor" stroke-width="1.4"/>
+        <path d="M12 28C12 28 18 24 24 28C30 32 36 28 36 28" stroke="currentColor" stroke-width="1"/>
+      </svg>
+      <div class="wordmark-text">
+        <span class="wordmark-name">Sadhana</span>
+        <span class="wordmark-sub">Spa Training</span>
+      </div>
+    </div>
+
+    <div id="role-switch" class="role-switch" role="tablist" aria-label="Role">
+      <button type="button" class="role-switch__option is-active" data-role="trainer" role="tab" aria-selected="true">Trainer</button>
+      <button type="button" class="role-switch__option" data-role="therapist" role="tab" aria-selected="false">Therapist</button>
+    </div>
+  </header>
+
+  <main class="stage">
+
+    <section id="view-trainer" class="view view-trainer">
+
+      <section id="ai-panel" class="ai-panel">
+        <p class="ai-panel__label">Draft a course</p>
+        <textarea id="ai-input" class="ai-input" rows="3" placeholder="e.g. Balinese deep tissue, level 2, for therapists with 6 months experience">Balinese deep tissue, level 2, for therapists with 6 months experience</textarea>
+        <div class="ai-panel__row">
+          <button id="ai-go" type="button" class="btn btn--primary">Draft with AI</button>
+          <p id="ai-status" class="ai-status" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <div class="section-heading-row">
+        <h2 class="section-heading">Courses</h2>
+        <button id="new-course" type="button" class="btn">+ New course</button>
+      </div>
+      <section id="course-list-trainer" class="course-list" aria-label="Courses">
+        <!--
+        <article class="card" data-course-id="c1">
+          <p class="card__eyebrow">By Ratna · Body · Level 2</p>
+          <h3 class="card__title">Balinese Deep Tissue</h3>
+          <p class="card__meta">6 modules · 24 steps</p>
+          <span class="pill">Draft</span>
+        </article>
+        -->
+      </section>
+
+      <section id="builder" class="builder" hidden>
+        <div id="builder-modules" class="builder-modules">
+          <!--
+          <div class="step" data-step-id="s1">
+            <span class="step__handle">01</span>
+            <div class="step__body">
+              <p class="step__title">Draping fundamentals</p>
+              <p class="step__type">Lesson</p>
+            </div>
+            <button type="button" class="btn">Edit</button>
+          </div>
+
+          <div class="step step--locked" data-step-id="s2">
+            <span class="step__handle">02</span>
+            <div class="step__body">
+              <p class="step__title">Pressure calibration quiz</p>
+              <p class="step__type">Quiz</p>
+            </div>
+          </div>
+
+          <div class="step step--done" data-step-id="s0">
+            <span class="step__handle">✓</span>
+            <div class="step__body">
+              <p class="step__title">Orientation</p>
+              <p class="step__type">Lesson</p>
+            </div>
+          </div>
+          -->
+        </div>
+      </section>
+
+    </section>
+
+    <section id="view-learner" class="view view-learner" hidden>
+
+      <h2 class="section-heading">Available Courses</h2>
+      <section id="course-list-learner" class="course-list course-list--learner" aria-label="Courses">
+        <!--
+        <article class="card" data-course-id="c1">
+          <p class="card__eyebrow">By Ratna · Body · Level 2</p>
+          <h3 class="card__title">Balinese Deep Tissue</h3>
+          <p class="card__meta">3 of 8 steps</p>
+          <span class="pill">In progress</span>
+        </article>
+        -->
+      </section>
+
+      <section id="player" class="player" hidden>
+        <div id="player-progress" class="player-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+          <div class="player-progress__track">
+            <div class="player-progress__fill"></div>
+          </div>
+          <p class="player-progress__label"></p>
+        </div>
+
+        <div id="player-step" class="player-step">
+          <!--
+          <p class="player-step__eyebrow">Step 3 of 8</p>
+          <h2 class="player-step__title">Reading the client's tension map</h2>
+          <div class="player-step__body">
+            <p>Before any pressure is applied, spend two full minutes with open palms...</p>
+          </div>
+
+          <div class="quiz">
+            <p class="quiz__question">Where do you begin a Balinese sequence?</p>
+            <button type="button" class="quiz-option">Feet</button>
+            <button type="button" class="quiz-option is-selected">Back</button>
+            <button type="button" class="quiz-option is-correct">Feet</button>
+            <button type="button" class="quiz-option is-incorrect">Back</button>
+          </div>
+
+          <button type="button" class="btn btn--primary">Continue</button>
+          -->
+        </div>
+      </section>
+
+    </section>
+
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>

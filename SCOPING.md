@@ -42,7 +42,13 @@ honest enough to bet a client's body on.
   allowed and retaking is expected.
 - **Quizzes are graded server-side. Correct answers are never sent to the
   learner's browser.**
-- **One course built properly**: Balinese Deep Tissue, Level 2.
+- **One course built properly**: Hot Stone Massage, Level 1 — seeded and
+  already published, so the app is never empty. Deliberately a *different*
+  treatment from the AI-draft demo prompt below, so drafting that one live
+  doesn't look like a duplicate of something already on screen.
+- **The AI-draft textarea comes pre-filled** with "Balinese deep tissue, level
+  2, for therapists with 6 months experience" — one click drafts a second,
+  visibly fresh course live, which is the actual demo of the AI feature.
 
 ## What I am deliberately leaving out, and why
 
@@ -54,6 +60,7 @@ honest enough to bet a client's body on.
 | Course versioning, unpublish, edit-after-publish | Publishing locks. Adding versioning to that is a data-model problem, not a UI one, and it does not change the demo. |
 | Certificates, notifications, multi-language, offline | None of these are the competence gate. |
 | More than one seeded course | Depth over breadth. One real course beats six stubs. |
+| A WYSIWYG toolbar for rich-text steps | The trainer authors structured HTML directly (`<p>`, `<ul>`, `<strong>`, `<h3>`); the learner sees it fully formatted — bullets, bold, headings all render. Only the *authoring* input is textarea-shaped, not the *output*. A real toolbar needs a library we don't have without an install, or 20+ minutes to hand-build selection-wrapping buttons. Named here rather than discovered at the walkthrough. |
 
 ## Where it breaks at 500 therapists
 
